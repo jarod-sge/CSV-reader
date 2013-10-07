@@ -31,6 +31,7 @@ class CSVReader
       hash[header] = value unless value.empty?
     end
     hash
+    
   end
 
 
