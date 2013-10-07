@@ -8,7 +8,8 @@ class CSVReader
 
   end
 
-  def headers=(str)
+  # the instructions list this as 'headers=' but when called the = is missing so I defined it w/o the =
+  def headers(str)
     # turns string into array of words
     @headers = str.split(',')
 
@@ -34,7 +35,28 @@ class CSVReader
     
   end
 
+  # creates a read-only instance of file from @fname
+  def read
+    f = File.new(@fname, 'r')
 
+    # I'm not quite sure what is going on here. 
+    # how does a message get sent to self while
+    # being assigned the result of f.readline.
+    # also it appears readline is not a File method. 
+    # How are we to use it on a File instance?
+    self.headers = f.readline
+
+    # I'm not understanding how 'next_line = f.readline'
+    # is a conditional.
+    # or what block is passed for yield.
+    while(!f.eof? && next_line = f.readline)
+      values = next_line.split(',')
+      hash = create_hash(values)
+      yield(hash)
+    end
+  end
+
+  def 
 end
 
 class String
